@@ -8,5 +8,14 @@ docs/site/
 # environment.
 Manifest*.toml
 
-# Tokens, Secrets
-/
+# Jupyter Notebook
+.ipynb_checkpoints
+.colab/
+
+# Outputs
+/images/
+
+# Environments / Secrets 
+.env
+env
+/tokens
