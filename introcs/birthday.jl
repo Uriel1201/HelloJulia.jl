@@ -56,5 +56,5 @@ function main()
 end
 
 if abspath(PROGRAM_FILE) == abspath(@__FILE__)
-    exit(main())
+    main()
 end
