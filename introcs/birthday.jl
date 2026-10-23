@@ -42,15 +42,16 @@ end
 function main()
     if length(ARGS) < 2
         println(stderr, "Error: Usage n, trials")
-        return 1
+        exit(1)
     end
     n = parse(Int64, ARGS[1])
     trials = parse(Int64, ARGS[2])
     simulation = birthdaysimulation(n, trials)
     t = Float64(trials)
     f = cumsum(simulation)
-    Arrow.write("outputs/birthday.arrow", (k = 1:length(f), cumulative_k = f, p_k = f./t))
-    return 0
+    io = IOBuffer()
+    Arrow.write(io, (k = 1:length(f), cumulative_k = f, p_k = f ./ t))
+    write(stdout, take!(io))
 end
 
 if abspath(PROGRAM_FILE) == abspath(@__FILE__)
