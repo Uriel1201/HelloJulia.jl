@@ -23,8 +23,8 @@ using Arrow
 function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
     n > 0 || throw(ArgumentError("n must be positive"))
     trials >= 0 || throw(ArgumentError("trials must be non-negative"))
-    s = zeros(Int64, n + 1)
-    rng = Random.default_rng()
+    s        = zeros(Int64, n + 1)
+    rng      = Random.default_rng()
     birthday = falses(n)
     for _ in 1:trials
         fill!(birthday, false)
@@ -49,15 +49,15 @@ function main()
     trials = parse(Int64, ARGS[2])
     simulation = birthdaysimulation(n, trials)
     t = Float64(trials)
-    f = cumsum(simulation)
-    p = f ./ t
+    f = cumsum(simulation) ./ t
     idx = findfirst(>=(0.5), p)
     if idx !== nothing
-        f = f[1:idx]
-        p = p[1:idx]
+        f          = f[1:idx]
+        simulation = simulation[1:idx]
+        p          = p[1:idx]
     end
     io = IOBuffer()
-    Arrow.write(io, (k = 1:length(f), cumulative_k = f, p_k = p))
+    Arrow.write(io, (k = 1:length(simulation), count_k = simulation, p_k = f))
     write(stdout, take!(io))
 end
 
