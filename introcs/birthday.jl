@@ -45,19 +45,18 @@ function main()
         println(stderr, "Error: Usage n, trials")
         exit(1)
     end
-    n = parse(Int64, ARGS[1])
-    trials = parse(Int64, ARGS[2])
+    n          = parse(Int64, ARGS[1])
+    trials     = parse(Int64, ARGS[2])
     simulation = birthdaysimulation(n, trials)
-    t = Float64(trials)
-    f = cumsum(simulation) ./ t
-    idx = findfirst(>=(0.5), p)
+    t          = Float64(trials)
+    f          = cumsum(simulation) ./ t
+    idx        = findfirst(>=(0.5), f)
     if idx !== nothing
         f          = f[1:idx]
         simulation = simulation[1:idx]
-        p          = p[1:idx]
     end
     io = IOBuffer()
-    Arrow.write(io, (k = 1:length(simulation), count_k = simulation, p_k = f))
+    Arrow.write(io, (k = 1:length(simulation), frequency = simulation, p_k = f))
     write(stdout, take!(io))
 end
 
