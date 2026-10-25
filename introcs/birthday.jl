@@ -21,8 +21,8 @@ using Random
 using Arrow
 
 function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
-    n > 0 || throw(ArgumentError("n must be positive"))
-    trials >= 0 || throw(ArgumentError("trials must be non-negative"))
+    n        > 0 || throw(ArgumentError("n must be positive"))
+    trials   >= 0 || throw(ArgumentError("trials must be non-negative"))
     s        = zeros(Int64, n + 1)
     rng      = Random.default_rng()
     birthday = falses(n)
