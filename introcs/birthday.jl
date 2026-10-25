@@ -30,12 +30,12 @@ function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
         fill!(birthday, false)
         count = 0
         for _ in 1:(n + 1)
-            p = rand(rng, 1:n)
-            count += 1
+            p           = rand(rng, 1:n)
+            count       += 1
             birthday[p] && break
             birthday[p] = true
         end
-        s[count] +=1
+        s[count] += 1
     end
     return s
 end
