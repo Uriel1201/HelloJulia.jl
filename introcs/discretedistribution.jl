@@ -34,7 +34,7 @@ function main()
         exit(1)
     end
     sample = discretedistribution(size, lengths)
-    io = IOBuffer()
+    io     = IOBuffer()
     Arrow.write(io, (sample = sample,))
     write(stdout, take!(io))
     flush(stdout)
