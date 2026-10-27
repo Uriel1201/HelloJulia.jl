@@ -11,10 +11,8 @@ and prints m random indices choosing each index i with probability proportional 
 using Random
 using Arrow
 
-function discretedistribution(size::Int, lengths::Vector{Int})::Vector{Int}
-    rng = Random.default_rng()
-    s   = cumsum(lengths)
-    p   = rand(rng, 1:s[end], size)
+function discretedistribution(size::Int, cumweights::Vector{Int}, rng::AbstractRNG)::Vector{Int}
+    p = rand(rng, 1:cumweights[end], size)
     return searchsortedfirst.(Ref(s), p)
 end
 
@@ -28,13 +26,15 @@ function main()
         println(stderr, "Error: size must be non-negative")
         exit(1)
     end
-    lengths = parse.(Int, ARGS[2:end])
-    if sum(lengths) == 0
+    weights = parse.(Int, ARGS[2:end])
+    if sum(weights) == 0
         println(stderr, "Error: cumulative must be positive")
         exit(1)
     end
-    sample = discretedistribution(size, lengths)
-    io     = IOBuffer()
+    rng        = Random.default_rng()
+    cumweights = cumsum(weights)
+    sample     = discretedistribution(size, cumweights, rng)
+    io         = IOBuffer()
     Arrow.write(io, (sample = sample,))
     write(stdout, take!(io))
     flush(stdout)
