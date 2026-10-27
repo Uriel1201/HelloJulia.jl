@@ -13,27 +13,27 @@ using Arrow
 
 function discretedistribution(size::Int, cumweights::Vector{Int}, rng::AbstractRNG)::Vector{Int}
     p = rand(rng, 1:cumweights[end], size)
-    return searchsortedfirst.(Ref(s), p)
+    return searchsortedfirst.(Ref(cumweights), p)
 end
 
 function main()
     if length(ARGS) < 2
-        println(stderr, "Error: Usage size, lengths")
+        println(stderr, "Usage: discretedistribution.jl m a1 a2 ... an")
         exit(1)
     end
-    size = parse(Int, ARGS[1])
-    if size < 0
-        println(stderr, "Error: size must be non-negative")
+    m          = parse(Int, ARGS[1])
+    if m < 0
+        println(stderr, "Error: m must be non-negative")
         exit(1)
     end
-    weights = parse.(Int, ARGS[2:end])
-    if sum(weights) == 0
-        println(stderr, "Error: cumulative must be positive")
+    weights    = parse.(Int, ARGS[2:end])
+    if !all(>(0), weights)
+        println(stderr, "Error: weights must be positive")
         exit(1)
     end
     rng        = Random.default_rng()
     cumweights = cumsum(weights)
-    sample     = discretedistribution(size, cumweights, rng)
+    sample     = discretedistribution(m, cumweights, rng)
     io         = IOBuffer()
     Arrow.write(io, (sample = sample,))
     write(stdout, take!(io))
