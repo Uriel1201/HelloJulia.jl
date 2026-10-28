@@ -50,13 +50,8 @@ function main()
     simulation = birthdaysimulation(n, trials)
     t          = Float64(trials)
     f          = cumsum(simulation) ./ t
-    idx        = findfirst(>=(0.5), f)
-    if idx !== nothing
-        f          = f[1:idx]
-        simulation = simulation[1:idx]
-    end
     io         = IOBuffer()
-    Arrow.write(io, (k = 1:length(simulation), frequency = simulation, p_k = f))
+    Arrow.write(io, (COUNTS = 1:length(simulation), FREQUENCIES = simulation, POUNDS = f))
     write(stdout, take!(io))
 end
 
