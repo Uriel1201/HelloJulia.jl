@@ -6,20 +6,25 @@ Write a program introcs/discretedistribution.jl that takes an integer command-li
 argument m, followed by a sequence of positive integer command-line arguments a1,a2,…,an
 and prints m random indices choosing each index i with probability proportional to ai.
 
-Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script
+Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script:
 ~/HelloJulia.jl $ julia --project=. introcs/discretedistribution.jl 1000000 20 30 20 45 70 300 120 | uv run --script ../HELLO_PLOTS/plot_birthday.py
 
-Usage (Julia REPL): returns the data as values
+Usage (Julia REPL): returns the data as values:
 julia> using DataFrames
 julia> include("introcs/discretedistribution.jl")
-julia> df = DataFrame(discreteDistribution(1000000, cumsum[20, 30, 20, 45, 70, 300, 120]); copycols=false)
+julia> df = DataFrame(discretedistribution(1000000, cumsum[20, 30, 20, 45, 70, 300, 120], Random.default_rng()); copycols=false)
 =#
 using Random
 using Arrow
 
-function discretedistribution(size::Int, cumweights::Vector{Int}, rng::AbstractRNG)::Vector{Int}
+function discretedistribution(
+    size::Int, 
+    cumweights::Vector{Int}, 
+    rng::AbstractRNG
+)
     p = rand(rng, 1:cumweights[end], size)
-    return searchsortedfirst.(Ref(cumweights), p)
+    s = searchsortedfirst.(Ref(cumweights), p)
+    (SAMPLE = s,)
 end
 
 function main()
@@ -41,7 +46,7 @@ function main()
     cumweights = cumsum(weights)
     sample     = discretedistribution(m, cumweights, rng)
     io         = IOBuffer()
-    Arrow.write(io, (sample = sample,))
+    Arrow.write(io, sample)
     write(stdout, take!(io))
     flush(stdout)
 end
