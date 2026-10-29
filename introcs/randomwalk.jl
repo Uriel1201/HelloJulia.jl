@@ -5,12 +5,12 @@ Print the coordinates at each step of the walk (including the starting and endin
 Also, print the total number of steps taken.
 
 Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script:
-~/HelloJulia.jl $ julia --project=. introcs/randomwalk.jl 250 | uv run --script ../HELLO_PLOTS/plot_dist.py
+~/HelloJulia.jl $ julia --project=. introcs/randomwalk.jl 250 | uv run --script ../HELLO_PLOTS/plot_walk.py
 
 Usage (Julia REPL): returns the data as values:
 julia> using DataFrames, Random
-julia> include("introcs/discretedistribution.jl")
-julia> df = DataFrame(discretedistribution(250, Random.default_rng()); copycols=false)
+julia> include("introcs/randomwalk.jl")
+julia> df = DataFrame(randomwalk(250, Random.default_rng()); copycols=false)
 julia> println("TOTAL_STEPS: $(nrow(df))")
 =#
 using Random
@@ -23,7 +23,7 @@ function randomwalk(manhattan::Int,
     steps = (STEP_X = Int[0], STEP_Y = Int[0])
     while abs(i) + abs(j) < manhattan
         p = rand(rng)
-        if p < 0.25
+        if p     < 0.25
             i+=1
         elseif p < 0.5
             i -= 1
