@@ -7,7 +7,7 @@ In each of trials independent experiments, simulate a random walk
 until the random walker is at Manhattan distance r from the starting point.
 Print the average number of steps.
 
-run(`bash -c "julia --project=. introcs/randomwalkers.jl 400 2000000"`)
+julia> run(`bash -c "julia --project=. introcs/randomwalkers.jl 400 2000000"`)
 =#
 using Random
 using Arrow
