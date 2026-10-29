@@ -8,12 +8,12 @@ until the random walker is at Manhattan distance r from the starting point.
 Print the average number of steps.
 
 Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script:
-~/HelloJulia.jl $ julia --project=. introcs/randomwalkers.jl 200 200000 | uv run --script ../HELLO_PLOTS/plot_randomwalkers.py
+~/HelloJulia.jl $ julia --project=. introcs/randomwalkers.jl 20 200000 | uv run --script ../HELLO_PLOTS/plot_randomwalkers.py
 
 Usage (Julia REPL): returns the data as values:
 julia> using DataFrames, Random
 julia> include("introcs/randomwalkers.jl")
-julia> df = DataFrame(randomwalkers(250, 2000, Random.default_rng()); copycols=false)
+julia> df = DataFrame(randomwalkers(20, 200000, Random.default_rng()); copycols=false)
 julia> println("AVERAGE_TOTAL_STEPS: $(df[end, :MEANS])")
 =#
 using Random
