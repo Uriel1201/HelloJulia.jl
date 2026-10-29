@@ -56,9 +56,9 @@ function randomwalkers(
     manhattan::Int, 
     trials::Int, 
     rng::AbstractRNG
-)::@NamedTuple{OBS::Vector{Int}, STEPS::Vector{Int}, MEANS::Vector{Float}}
+)::@NamedTuple{OBS::Vector{Int}, STEPS::Vector{Int}, MEANS::Vector{Float64}}
     steps = randomwalks(manhattan, trials, rng)
-    obs = 1:length(steps)
+    obs   = collect(1:length(steps))
     means = cumsum(steps) ./ obs
     (OBS = obs, STEPS = steps, MEANS = means)
 end
