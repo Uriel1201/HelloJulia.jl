@@ -17,7 +17,7 @@ for each possible value of i from 1 until the fraction reaches (or exceeds) 50%.
 julia> run(`bash -c "julia --project=. introcs/birthday.jl 365 1000000"`)
 
 julia> include("introcs/birthday.jl")
-julia>  
+julia> birthday(365, 1000000)
 =#
 using Random
 using Arrow
@@ -42,7 +42,7 @@ function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
     return s
 end
 
-function birthday(n::Int, trials::Int)::Tuple{Vector{Int}, {Float64}}
+function birthday(n::Int, trials::Int)::Tuple{Vector{Int}, Vector{Float64}}
     simulation = birthdaysimulation(n, trials)
     t          = Float64(trials)
     f          = cumsum(simulation) ./ t
