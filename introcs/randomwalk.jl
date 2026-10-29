@@ -4,7 +4,7 @@ until the random walker is at Manhattan distance r from the starting point.
 Print the coordinates at each step of the walk (including the starting and ending points), treating the starting point as (0, 0). 
 Also, print the total number of steps taken.
 
-Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script:
+Usage (terminal): emits an Arrow stream on stdout, consumed by an script:
 ~/HelloJulia.jl $ julia --project=. introcs/randomwalk.jl 250 | uv run --script ../HELLO_PLOTS/plot_walk.py
 
 Usage (Julia REPL): returns the data as values:
