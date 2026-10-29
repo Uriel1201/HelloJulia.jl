@@ -6,7 +6,13 @@ Write a program introcs/discretedistribution.jl that takes an integer command-li
 argument m, followed by a sequence of positive integer command-line arguments a1,a2,…,an
 and prints m random indices choosing each index i with probability proportional to ai.
 
-~/HelloJulia.jl $ julia --project=. introcs/discretedistribution.jl 20 100 200 50 90 120 300 90
+Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script
+~/HelloJulia.jl $ julia --project=. introcs/discretedistribution.jl 1000000 20 30 20 45 70 300 120 | uv run --script ../HELLO_PLOTS/plot_birthday.py
+
+Usage (Julia REPL): returns the data as values
+julia> using DataFrames
+julia> include("introcs/discretedistribution.jl")
+julia> df = DataFrame(birthday(365, 1000000); copycols=false)
 =#
 using Random
 using Arrow
