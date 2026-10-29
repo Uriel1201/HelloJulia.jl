@@ -15,6 +15,9 @@ exactly i people enter the room, and the fraction of times that i or fewer peopl
 for each possible value of i from 1 until the fraction reaches (or exceeds) 50%.
 
 julia> run(`bash -c "julia --project=. introcs/birthday.jl 365 1000000"`)
+
+julia> include("introcs/birthday.jl")
+julia>  
 =#
 using Random
 using Arrow
@@ -37,6 +40,18 @@ function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
         s[count] += 1
     end
     return s
+end
+
+function birthday(n::Int, trials::Int)::Tuple{Vector{Int}, {Float64}}
+    simulation = birthdaysimulation(n, trials)
+    t          = Float64(trials)
+    f          = cumsum(simulation) ./ t
+    idx        = findfirst(>=(0.5), f)
+    if idx !== nothing
+        f          = f[1:idx]
+        simulation = simulation[1:idx]
+    end
+    (simulation, f)
 end
 
 function main()
