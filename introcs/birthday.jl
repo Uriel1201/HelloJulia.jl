@@ -18,8 +18,9 @@ Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script
 ~/HelloJulia.jl $ julia --project=. introcs/birthday.jl 365 1000000 | uv run --script ../HELLO_PLOTS/plot_birthday.py
 
 Usage (Julia REPL): returns the data as values
+julia> using DataFrames
 julia> include("introcs/birthday.jl")
-julia> birthday(365, 1000000)
+julia> df = DataFrames(birthday(365, 1000000); copycols=false)
 =#
 using Random
 using Arrow
@@ -44,16 +45,11 @@ function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
     return s
 end
 
-function birthday(n::Int, trials::Int)::Tuple{Vector{Int}, Vector{Float64}}
-    simulation = birthdaysimulation(n, trials)
-    t          = Float64(trials)
-    f          = cumsum(simulation) ./ t
-    idx        = findfirst(>=(0.5), f)
-    if idx !== nothing
-        f          = f[1:idx]
-        simulation = simulation[1:idx]
-    end
-    (simulation, f)
+function birthday(n::Int, trials::Int)
+    sim = birthdaysimulation(n, trials)
+    f   = cumsum(sim) ./ trials
+    idx = something(findfirst(>=(0.5), f), length(f))
+    (COUNTS = collect(1:idx), FREQUENCIES = sim[1:idx], CUM_FRACTIONS = f[1:idx])
 end
 
 function main()
