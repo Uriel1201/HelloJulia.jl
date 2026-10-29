@@ -51,7 +51,7 @@ end
 function birthday(
     n::Int, 
     trials::Int
-)::@NamedTuple{COUNTS::Vector{Int}, FREQUENCIES::Vector{Int}, CUM_FRACTION::Vector{Float}}
+)::@NamedTuple{COUNTS::Vector{Int}, FREQUENCIES::Vector{Int}, CUM_FRACTIONS::Vector{Float64}}
     sim = birthdaysimulation(n, trials)
     f   = cumsum(sim) ./ trials
     idx = something(findfirst(>=(0.5), f), length(f))
