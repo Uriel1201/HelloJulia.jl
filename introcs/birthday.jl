@@ -42,7 +42,7 @@ function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
         end
         s[count] += 1
     end
-    return s
+    s
 end
 
 function birthday(n::Int, trials::Int)
