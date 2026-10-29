@@ -7,12 +7,12 @@ argument m, followed by a sequence of positive integer command-line arguments a1
 and prints m random indices choosing each index i with probability proportional to ai.
 
 Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script:
-~/HelloJulia.jl $ julia --project=. introcs/discretedistribution.jl 1000000 20 30 20 45 70 300 120 | uv run --script ../HELLO_PLOTS/plot_birthday.py
+~/HelloJulia.jl $ julia --project=. introcs/discretedistribution.jl 1000000 20 30 20 45 70 300 120 | uv run --script ../HELLO_PLOTS/plot_dist.py
 
 Usage (Julia REPL): returns the data as values:
-julia> using DataFrames
+julia> using DataFrames, Random
 julia> include("introcs/discretedistribution.jl")
-julia> df = DataFrame(discretedistribution(1000000, cumsum[20, 30, 20, 45, 70, 300, 120], Random.default_rng()); copycols=false)
+julia> df = DataFrame(discretedistribution(1000000, cumsum([20, 30, 20, 45, 70, 300, 120]), Random.default_rng()); copycols=false)
 =#
 using Random
 using Arrow
