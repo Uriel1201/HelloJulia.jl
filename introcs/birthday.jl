@@ -14,9 +14,8 @@ Print a table that summarizes the results (the count i, the number of times that
 exactly i people enter the room, and the fraction of times that i or fewer people enter the room)
 for each possible value of i from 1 until the fraction reaches (or exceeds) 50%.
 
-~/HelloJulia.jl $ julia --project=. introcs/birthday.jl 365 1000000
+julia> run(`bash -c "julia --project=. introcs/birthday.jl 365 1000000"`)
 =#
-
 using Random
 using Arrow
 
