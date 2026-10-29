@@ -63,7 +63,7 @@ function main()
     t          = Float64(trials)
     f          = cumsum(simulation) ./ t
     io         = IOBuffer()
-    Arrow.write(io, (COUNTS = 1:length(simulation), FREQUENCIES = simulation, POUNDS = f))
+    Arrow.write(io, (COUNTS = 1:length(simulation), FREQUENCIES = simulation, CUM_FRACTIONS = f))
     write(stdout, take!(io))
 end
 
