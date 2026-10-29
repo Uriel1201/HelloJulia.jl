@@ -14,7 +14,7 @@ Usage (Julia REPL): returns the data as values:
 julia> using DataFrames, Random
 julia> include("introcs/randomwalkers.jl")
 julia> df = DataFrame(randomwalkers(250, 2000, Random.default_rng()); copycols=false)
-julia> println("AVERAGE_TOTAL_STEPS: $(nrow(df))")
+julia> println("AVERAGE_TOTAL_STEPS: $(df[end, :MEANS])")
 =#
 using Random
 using Arrow
