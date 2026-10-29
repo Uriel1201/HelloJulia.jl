@@ -20,7 +20,7 @@ Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script
 Usage (Julia REPL): returns the data as values
 julia> using DataFrames
 julia> include("introcs/birthday.jl")
-julia> df = DataFrames(birthday(365, 1000000); copycols=false)
+julia> df = DataFrame(birthday(365, 1000000); copycols=false)
 =#
 using Random
 using Arrow
