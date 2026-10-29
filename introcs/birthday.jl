@@ -25,7 +25,10 @@ julia> df = DataFrame(birthday(365, 1000000); copycols=false)
 using Random
 using Arrow
 
-function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
+function birthdaysimulation(
+    n::Int64, 
+    trials::Int64
+)::Vector{Int64}
     n        > 0 || throw(ArgumentError("n must be positive"))
     trials   >= 0 || throw(ArgumentError("trials must be non-negative"))
     s        = zeros(Int64, n + 1)
@@ -45,7 +48,10 @@ function birthdaysimulation(n::Int64, trials::Int64)::Vector{Int64}
     s
 end
 
-function birthday(n::Int, trials::Int)
+function birthday(
+    n::Int, 
+    trials::Int
+)::@NamedTuple{COUNTS::Vector{Int}, FREQUENCIES::Vector{Int}, CUM_FRACTION::Vector{Float}}
     sim = birthdaysimulation(n, trials)
     f   = cumsum(sim) ./ trials
     idx = something(findfirst(>=(0.5), f), length(f))
