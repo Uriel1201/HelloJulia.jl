@@ -13,8 +13,8 @@ Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script
 Usage (Julia REPL): returns the data as values:
 julia> using DataFrames, Random
 julia> include("introcs/randomwalkers.jl")
-julia> df = DataFrame(randomwalkers(randomwalkers(250, 2000, Random.default_rng())); copycols=false)
-julia> println("TOTAL_STEPS: $(nrow(df))")
+julia> df = DataFrame(randomwalkers(250, 2000, Random.default_rng()); copycols=false)
+julia> println("AVERAGE_TOTAL_STEPS: $(nrow(df))")
 =#
 using Random
 using Arrow
@@ -41,9 +41,7 @@ function randomwalk(manhattan::Int,
     steps
 end
 
-function randomwalkers end
-
-function randomwalkers(manhattan::Int,
+function randomwalks(manhattan::Int,
     trials::Int,
     rng::AbstractRNG
 )::Vector{Int}
@@ -55,9 +53,14 @@ function randomwalkers(manhattan::Int,
 end
 
 function randomwalkers(
-    walkers::Vector{Int}
-)::@NamedTuple{OBS::Vector{Int}, SAMPLE::Vector{Int}, SAMPLE_MEANS::Vector{Float}}
-    (OBS = 1:length(walkers), SAMPLE = walkers, SAMPLE_MEANS = cumsum(steps) ./ obs)
+    manhattan::Int, 
+    trials::Int, 
+    rng::AbstractRNG
+)::@NamedTuple{OBS::Vector{Int}, STEPS::Vector{Int}, MEANS::Vector{Float}}
+    steps = randomwalks(manhattan, trials, rng)
+    obs = 1:length(steps)
+    means = cumsum(steps) ./ obs
+    (OBS = obs, STEPS = steps, MEANS = means)
 end
 
 function main()
@@ -72,11 +75,9 @@ function main()
         exit(1)
     end
     rng       = Random.default_rng()
-    steps     = randomwalkers(manhattan, trials, rng)
-    obs       = 1:trials
-    means     = cumsum(steps) ./ obs
+    data      = randomwalkers(manhattan, trials, rng)
     io        = IOBuffer()
-    Arrow.write(io, (OBS = obs, SAMPLE = steps, SAMPLE_MEANS = means))
+    Arrow.write(io, data)
     write(stdout, take!(io))
     flush(stdout)
 end
