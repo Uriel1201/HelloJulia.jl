@@ -12,7 +12,7 @@ Usage (terminal): emits an Arrow stream on stdout, consumed by a plotting script
 Usage (Julia REPL): returns the data as values
 julia> using DataFrames
 julia> include("introcs/discretedistribution.jl")
-julia> df = DataFrame(birthday(365, 1000000); copycols=false)
+julia> df = DataFrame(discreteDistribution(1000000, cumsum[20, 30, 20, 45, 70, 300, 120]); copycols=false)
 =#
 using Random
 using Arrow
