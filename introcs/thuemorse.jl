@@ -12,8 +12,9 @@ and a - (minus sign) if they are different.
 Include two space characters between each + and - character.
 
 Hint:
-p(i) == p(j)  ⇔  p(i ^ j) == 0  ⇔  (i ^ j).count_ones() % 2 == 0 p(x) = x.count_ones() % 2 
+p(i) == p(j)  ⇔  p(i ^ j) == 0  
 Such that p(x) is the value of Thue-Morse in the position x, starting the sequence in zero.
+p(x) = x.count_ones() % 2 
 
 Usage (Julia REPL): returns the data as values
 julia> include("introcs/thuemorse.jl")
