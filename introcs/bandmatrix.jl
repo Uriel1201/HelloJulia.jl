@@ -26,3 +26,11 @@ function bandmatrix(
     nxn  = indexmatrix(n)
     nxn .<= width 
 end
+
+function printband(
+    b::BitMatrix
+)::None
+    for row in eachrow(b)
+        println(join(x ? "*  " : "0  " for x in row))
+    end
+end
