@@ -7,10 +7,7 @@ and two spaces between each 0 or *.
 
 Usage (Julia REPL): returns the data as values
 julia> include("introcs/bandmatrix.jl")
-julia> b = bandmatrix(27, 12)
-julia> for row in eachrow(b)
-           println(join(x ? "*  " : "0  " for x in row))
-       end
+julia> printband(bandmatrix(27, 12))
 =#
 
 function indexmatrix(
