@@ -25,7 +25,7 @@ end
 
 function showmatrix(
     b::BitMatrix
-)::None
+)::Nothing 
     for row in eachrow(b)
         println(join(x ? "*  " : "0  " for x in row))
     end

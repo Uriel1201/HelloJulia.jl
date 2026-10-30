@@ -19,19 +19,20 @@ p(x) = x.count_ones() % 2
 
 Usage (Julia REPL): returns the data as values
 julia> include("introcs/thuemorse.jl")
-julia> showmatrix(thuemorse(n))
+julia> showmatrix(thuemorse(700))
 =#
 
 function indexones(n::Int)::Matrix{Int}
-    count_ones.((1:n) .⊻ (1:n)')
+    idx = collect(0:n-1)
+    count_ones.(idx .⊻ idx')
 end
 
 function thuemorse(n::Int)::BitMatrix
     mod.(indexones(n), 2) .== 0
 end
 
-function showmatrix(thuemorse::BitMatrix)::None
-    for row in eachrow(b)
+function showmatrix(thuemorse::BitMatrix)::Nothing 
+    for row in eachrow(thuemorse)
         println(join(x ? "+  " : "-  " for x in row))
     end
 end
