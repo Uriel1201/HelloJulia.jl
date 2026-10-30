@@ -11,6 +11,10 @@ by printing a + (plus sign) in row i and column j if bits i and j in the sequenc
 and a - (minus sign) if they are different.
 Include two space characters between each + and - character.
 
+Hint:
+p(i) == p(j)  ⇔  p(i ^ j) == 0  ⇔  (i ^ j).count_ones() % 2 == 0 p(x) = x.count_ones() % 2 
+Such that p(x) is the value of Thue-Morse in the position x, starting the sequence in zero.
+
 Usage (Julia REPL): returns the data as values
 julia> include("introcs/thuemorse.jl")
 julia> showmatrix(thuemorse(n))
