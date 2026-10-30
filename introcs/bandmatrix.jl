@@ -20,8 +20,7 @@ function bandmatrix(
     n::Int,
     width::Int
 )::BitMatrix
-    nxn  = indexmatrix(n)
-    nxn .<= width 
+    indexmatrix(n) .<= width 
 end
 
 function printband(
